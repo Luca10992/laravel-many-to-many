@@ -21,7 +21,11 @@
         <div class="w-50 d-flex flex-column justify-content-between">
             <div>
                 <h5>Descrizione: <p class="d-inline">{{ $project->description }}</p></h5>
-                <div class="badge fs-5 p-0">{!! $project->type->getBadge() !!}</div>
+                <div class="d-flex">
+                    <h5 class="m-0 fw-bold">Tecnologie: </h5>
+                    <p class="m-0">{{ $project->getTechnologies() }}</p>
+                </div>
+                <div class="badge fs-5 p-0 my-2">{!! $project->type->getBadge() !!}</div>
             </div>
             <div class="d-flex justify-content-between align-items-center">
                 <h6 class="m-0">Data di pubblicazione: <p class="d-inline m-0">{{ $project->updated_at }}</p></h6>

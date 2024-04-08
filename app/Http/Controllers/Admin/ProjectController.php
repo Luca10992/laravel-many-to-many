@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
+use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Http\Request;
 
@@ -29,7 +30,8 @@ class ProjectController extends Controller
     {
         $project = new Project;
         $types = Type::all();
-        return view('admin.projects.create', compact('project', 'types'));
+        $technologies = Technology::all();
+        return view('admin.projects.create', compact('project', 'types', 'technologies'));
     }
 
     /**
@@ -41,12 +43,16 @@ class ProjectController extends Controller
     {
         $request->validated();
         $data = $request->all();
-
+        
         $project = new Project();
         $project->fill($data);
         $project->save();
 
-        return redirect()->route('admin.projects.index', $project);
+        if (array_key_exists('technologies', $data)) {
+            $project->technologies()->attach($data['technologies']);
+        }
+
+        return redirect()->route('admin.projects.show', $project);
     }
 
     /**
@@ -67,7 +73,8 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $types = Type::all();
-        return view('admin.projects.edit', compact('project', 'types'));
+        $technologies = Technology::all();
+        return view('admin.projects.edit', compact('project', 'types', 'technologies'));
     }
 
     /**
@@ -83,8 +90,12 @@ class ProjectController extends Controller
         $data = $request->all();
 
         $project->update($data);
+        
+        if (array_key_exists('technologies', $data)) {
+            $project->technologies()->attach($data['technologies']);
+        }
 
-        return redirect()->route('admin.projects.index', $project);
+        return redirect()->route('admin.projects.show', $project);
     }
 
     /**

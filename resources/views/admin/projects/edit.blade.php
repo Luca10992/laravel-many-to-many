@@ -10,7 +10,7 @@
         @method('PATCH')
 
         <div class="row">
-            <div class="col-8">
+            <div class="col-4">
                 <label for="title">Nome Progetto</label>
                 <input class="form-control @error ('title') is-invalid @enderror" type="text" name="title" id="title" value="{{ old('title', $project['title']) }}">
                 @error ('title')
@@ -19,12 +19,25 @@
             </div>
             <div class="col-4">
                 <label for="type_id">Tipologia Progetto</label>
-                <select class="form-select" name="type_id" id="type_id">
+                <select class="form-select @error ('type_id') is-invalid @enderror" name="type_id" id="type_id">
                     <option class="d-none" selected="">Seleziona la tipologia</option>
                     @foreach ($types as $type)
                     <option value="{{ $type->id }}">{{ $type->label }}</option>
                     @endforeach
                 </select>
+                @error ('type_id')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="col-4">
+                <div class="row">
+                    @foreach ($technologies as $technology)
+                    <div class="col-4">
+                        <input type="checkbox" name="technologies[]" id="technology-{{ $technology->id }}" value="{{ $technology->id }}">
+                        <label for="technology-{{ $technology->id }}">{{ $technology->label }}</label>
+                    </div>
+                    @endforeach
+                </div>
             </div>
         </div>
         <div>
