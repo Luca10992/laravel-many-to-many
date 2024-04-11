@@ -5,7 +5,7 @@
   
 <div class="container">
     <h1 class="fs-2 fw-bold py-4">Aggiungi progetto</h1>
-    <form class="d-flex flex-column gap-3" action="{{ route('admin.projects.update', $project) }}" method="POST">
+    <form class="d-flex flex-column gap-3" action="{{ route('admin.projects.update', $project) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PATCH')
 
@@ -22,7 +22,7 @@
                 <select class="form-select @error ('type_id') is-invalid @enderror" name="type_id" id="type_id">
                     <option class="d-none" selected="">Seleziona la tipologia</option>
                     @foreach ($types as $type)
-                    <option value="{{ $type->id }}">{{ $type->label }}</option>
+                    <option {{ $project->type_id == old('type_id', $type->id) ? 'selected' : '' }} value="{{ $type->id }}">{{ $type->label }}</option>
                     @endforeach
                 </select>
                 @error ('type_id')
@@ -33,20 +33,25 @@
                 <div class="row">
                     @foreach ($technologies as $technology)
                     <div class="col-4">
-                        <input type="checkbox" name="technologies[]" id="technology-{{ $technology->id }}" value="{{ $technology->id }}">
+                        <input {{ in_array($technology->id, old('technologies', $project_technology_id)) ? 'checked' : '' }} type="checkbox" name="technologies[]" id="technology-{{ $technology->id }}" value="{{ $technology->id }}">
                         <label for="technology-{{ $technology->id }}">{{ $technology->label }}</label>
                     </div>
                     @endforeach
                 </div>
             </div>
-        </div>
-        <div>
-            <label for="thumb">Anteprima Progetto</label>
-            <input class="form-control" type="file" name="thumb" id="thumb"value="{{ $project->thumb }}" >
-        </div>
-        <div>
-            <label for="description">Descrizione Progetto</label>
-            <textarea class="form-control" type="text" name="description" id="description" rows="4">{{ $project->description }}</textarea>
+            <div class="col-8">
+                <div>
+                    <label for="thumb">Anteprima Progetto</label>
+                    <input class="form-control" type="file" name="thumb" id="thumb" value="{{ $project->thumb }}">
+                </div>
+                <div>
+                    <label for="description">Descrizione Progetto</label>
+                    <textarea class="form-control" type="text" name="description" id="description" rows="7">{{ $project->description }}</textarea>
+                </div>
+            </div>
+            <div class="col-4 p-4">
+                <img class="w-100" @if ( $project->thumb == '' ) src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIU04WE68MpK7kIJ_kHfCEY5NFXNegUYUJ8-pFSM7uEg&s" @endif src="{{ $project->thumb }}" alt="">
+            </div>
         </div>
         <div>
             <button class="btn btn-success">Save Project</button>

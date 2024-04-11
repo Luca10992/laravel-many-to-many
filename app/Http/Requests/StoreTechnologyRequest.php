@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateTypeRequest extends FormRequest
+class StoreTechnologyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,15 +25,13 @@ class UpdateTypeRequest extends FormRequest
     {
         return [
             'label' => 'required|string',
-            'color' => 'required|string'
         ];
     }
 
     public function messages()
     {
         return [
-            'label.required' => 'Inserire il nome della tipologia',
-            'color.required' => 'Inserire un colore'
+            'label.required' => 'Inserire il nome della tecnologia',
         ];
     }
 }

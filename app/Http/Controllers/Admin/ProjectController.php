@@ -9,6 +9,7 @@ use App\Models\Project;
 use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -43,9 +44,12 @@ class ProjectController extends Controller
     {
         $request->validated();
         $data = $request->all();
+
+        $img_path = Storage::put('uploads/projects', $data['thumb']);
         
         $project = new Project();
         $project->fill($data);
+        $project->thumb = $img_path;
         $project->save();
 
         if (array_key_exists('technologies', $data)) {
@@ -74,7 +78,8 @@ class ProjectController extends Controller
     {
         $types = Type::all();
         $technologies = Technology::all();
-        return view('admin.projects.edit', compact('project', 'types', 'technologies'));
+        $project_technology_id = $project->technologies->pluck('id')->toArray();
+        return view('admin.projects.edit', compact('project', 'types', 'technologies', 'project_technology_id'));
     }
 
     /**
@@ -86,10 +91,12 @@ class ProjectController extends Controller
     public function update(UpdateProjectRequest $request, Project $project)
     {
         $request->validated();
-
+        
         $data = $request->all();
+        $img_path = Storage::put('uploads/projects', $data['thumb']);
 
         $project->update($data);
+        $project->thumb = $img_path;
         
         if (array_key_exists('technologies', $data)) {
             $project->technologies()->attach($data['technologies']);

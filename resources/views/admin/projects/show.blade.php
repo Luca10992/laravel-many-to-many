@@ -16,7 +16,7 @@
     </div>
     <div class="show-container d-flex gap-3">
         <div class="w-50">
-            <img class="w-100" @if ( $project->thumb == '' ) src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIU04WE68MpK7kIJ_kHfCEY5NFXNegUYUJ8-pFSM7uEg&s" @endif alt="">
+            <img class="w-100" @if ( $project->thumb == '' ) src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIU04WE68MpK7kIJ_kHfCEY5NFXNegUYUJ8-pFSM7uEg&s" @endif src="{{ asset('storage/' . $project->thumb) }}" alt="">
         </div>
         <div class="w-50 d-flex flex-column justify-content-between">
             <div>

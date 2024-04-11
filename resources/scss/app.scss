@@ -28,6 +28,11 @@ a {
             }
         }
         .show-container {
+            max-height: 400px;
+            overflow: hidden;
+            img {
+                object-fit: fill;
+            }
             h5,
             h6 {
                 font-weight: bold;

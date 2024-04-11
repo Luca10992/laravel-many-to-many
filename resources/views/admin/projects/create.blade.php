@@ -5,7 +5,7 @@
   
 <div class="container">
     <h1 class="fs-2 fw-bold py-4">Aggiungi progetto</h1>
-    <form class="d-flex flex-column gap-3" action="{{ route('admin.projects.store') }}" method="POST">
+    <form class="d-flex flex-column gap-3" action="{{ route('admin.projects.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <div class="row">
@@ -38,14 +38,14 @@
                     @endforeach
                 </div>
             </div>
-        </div>
-        <div>
-            <label for="thumb">Anteprima Progetto</label>
-            <input class="form-control" type="file" name="thumb" id="thumb">
-        </div>
-        <div>
-            <label for="description">Descrizione Progetto</label>
-            <textarea class="form-control" type="text" name="description" id="description" rows="4"></textarea>
+            <div>
+                <label for="thumb">Anteprima Progetto</label>
+                <input class="form-control" type="file" name="thumb" id="thumb">
+            </div>
+            <div>
+                <label for="description">Descrizione Progetto</label>
+                <textarea class="form-control" type="text" name="description" id="description" rows="7"></textarea>
+            </div>
         </div>
         <div>
             <button class="btn btn-success">Add Project</button>

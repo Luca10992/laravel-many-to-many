@@ -13,6 +13,9 @@
         <li class="nav-item">
           <a @if(Route::currentRouteName()=='admin.types.index' ) class="nav-link active" @endif class="nav-link" href="{{ route('admin.types.index') }}">Types</a>
         </li>
+        <li class="nav-item">
+          <a @if(Route::currentRouteName()=='admin.technologies.index' ) class="nav-link active" @endif class="nav-link" href="{{ route('admin.technologies.index') }}">Technologies</a>
+        </li>
       </ul>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">

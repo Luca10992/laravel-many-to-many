@@ -29,7 +29,7 @@ class StoreTypeRequest extends FormRequest
         ];
     }
 
-    public function message()
+    public function messages()
     {
         return [
             'label.required' => 'Inserire il nome della tipologia',
