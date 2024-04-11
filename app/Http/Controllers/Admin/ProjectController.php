@@ -44,13 +44,15 @@ class ProjectController extends Controller
     {
         $request->validated();
         $data = $request->all();
-
-        $img_path = Storage::put('uploads/projects', $data['thumb']);
         
         $project = new Project();
         $project->fill($data);
-        $project->thumb = $img_path;
+        if (!empty($project->thumb)) {
+            $img_path = Storage::put('uploads/projects', $data['thumb']);
+            $project->thumb = $img_path;
+        }
         $project->save();
+
 
         if (array_key_exists('technologies', $data)) {
             $project->technologies()->attach($data['technologies']);
@@ -93,10 +95,12 @@ class ProjectController extends Controller
         $request->validated();
         
         $data = $request->all();
-        $img_path = Storage::put('uploads/projects', $data['thumb']);
-
+        
         $project->update($data);
-        $project->thumb = $img_path;
+        if (!empty($project->thumb)) {
+            $img_path = Storage::put('uploads/projects', $data['thumb']);
+            $project->thumb = $img_path;
+        }
         
         if (array_key_exists('technologies', $data)) {
             $project->technologies()->attach($data['technologies']);
